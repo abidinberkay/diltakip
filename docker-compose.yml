@@ -1,22 +1,21 @@
-version: '3.9'
-
+version: '3.8'
 services:
-  langschoolmsql:
-    image: mysql:8
-    container_name: langschoolmsql
-    restart: always
-    ports:
-      - '3307:3306'
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  postgres:
+    image: postgres:14
+    container_name: postgres-db
     environment:
-      - MYSQL_ROOT_PASSWORD=rootpass
-      - MYSQL_PASSWORD=mysqlpass
-      - MYSQL_USER=mysqluser
-      - MYSQL_DATABASE=mysqldb
-      - MYSQL_ROOT_HOST=%
-      - LANG=C.UTF-8
-      - lower_case_table_names=1
+      POSTGRES_USER: dbUserName
+      POSTGRES_PASSWORD: dbPassWord
+      POSTGRES_DB: dilokuldb
+    ports:
+      - "5432:5432"
     volumes:
-      - mysqldbvolume:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+
 volumes:
-  mysqldbvolume:
+  postgres_data:
+
+networks:
+  mynetwork:

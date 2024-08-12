@@ -1,0 +1,68 @@
+.clickable-card {
+    cursor: default; /* Indicates non-clickable */
+    border: 2px solid #007bff; /* Border color */
+    border-radius: 0.25rem; /* Border radius */
+    background: linear-gradient(to bottom, #a3d900, #8bc34a, #4caf50); /* More nuanced gradient from light to dark green */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+/* General container styling */
+.container {
+    margin-top: 20px;
+}
+
+/* Card styling */
+.card {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* Table styling */
+.table {
+    margin-top: 20px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    text-align: left;
+}
+
+/* Header styling */
+.table thead th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+/* Default row color */
+.table tbody tr {
+    background-color: rgba(249, 249, 249, 1); /* Light gray */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+/* Darker row color on hover */
+.table tbody tr:hover {
+    background-color: rgba(200, 200, 200, 1); /* Slightly darker gray */
+    transform: scale(1.01); /* Slightly enlarge the row on hover */
+}
+
+/* Even row color */
+.table tbody tr:nth-of-type(even) {
+    background-color: rgba(249, 249, 249, 1); /* Light gray */
+}
+
+/* Title styling */
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}

@@ -1,0 +1,56 @@
+.App {
+  text-align: center;
+}
+
+#sidebar {
+  width: 250px;
+  height: 100vh; /* Full height */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  border-right: 1px solid #ddd;
+  overflow-y: auto; /* Scroll if content overflows */
+}
+
+#sidebar .sidebar-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+#sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#sidebar .nav-link:hover,
+#sidebar .nav-link.active {
+  background-color: #007bff;
+  color: white;
+}
+
+#sidebar .nav-link i {
+  margin-right: 0.5rem; /* Space between icon and text */
+}
+
+#main-content {
+  margin-left: 250px; /* Margin to prevent content from being hidden behind the sidebar */
+}
+
+@media (max-width: 768px) {
+  #sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    border-right: none;
+  }
+
+  #main-content {
+    margin-left: 0;
+  }
+}

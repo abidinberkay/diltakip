@@ -1,5 +1,6 @@
 package com.dilokul.diltakip.model;
 
+import com.dilokul.diltakip.enums.CityEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,25 +9,32 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "student")
 public class Student {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", columnDefinition = "CHAR(36)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     private String name;
     private String tckn;
     private String surname;
     private String phone;
+
+    @Column(name = "second_phone")
     private String secondPhone;
     private String address;
+
+    @Enumerated(EnumType.STRING)
+    private CityEnum city;
+
+    @Column(name = "registration_date")
     private LocalDateTime registrationDate;
 
     @UpdateTimestamp
@@ -36,8 +44,4 @@ public class Student {
     @Column(name = "created_on", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime createdOn;
-
-    @ManyToOne
-    @JoinColumn(name = "class_id", nullable = true) // Nullable allows the student to exist without a class
-    private Class clazz;
 }
