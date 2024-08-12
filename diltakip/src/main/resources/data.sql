@@ -8,14 +8,14 @@ DROP TABLE IF EXISTS teacher;
 
 -- Create teacher table with auto-incrementing primary key
 CREATE TABLE teacher (
-                         id SERIAL PRIMARY KEY,
+                         id BIGSERIAL PRIMARY KEY,
                          name VARCHAR(255),
                          tckn VARCHAR(20),
                          surname VARCHAR(255),
                          phone VARCHAR(20),
                          second_phone VARCHAR(20),
                          address VARCHAR(255),
-                         city VARCHAR(50), -- Changed to VARCHAR
+                         city VARCHAR(50),
                          update_time TIMESTAMP,
                          created_on TIMESTAMP NOT NULL
 );
@@ -28,10 +28,10 @@ INSERT INTO teacher (name, tckn, surname, phone, second_phone, address, city, up
 
 -- Create class table with auto-incrementing primary key
 CREATE TABLE class (
-                       id SERIAL PRIMARY KEY,
+                       id BIGSERIAL PRIMARY KEY,
                        name VARCHAR(255),
                        language VARCHAR(50),
-                       teacher_id INTEGER REFERENCES teacher(id)
+                       teacher_id BIGINT REFERENCES teacher(id)
 );
 
 -- Insert data into class table
@@ -43,11 +43,11 @@ INSERT INTO class (name, language, teacher_id) VALUES
 
 -- Create class_time table with auto-incrementing primary key
 CREATE TABLE class_time (
-                            id SERIAL PRIMARY KEY,
+                            id BIGSERIAL PRIMARY KEY,
                             day_of_week VARCHAR(20),
                             start_time TIME,
                             end_time TIME,
-                            class_id INTEGER REFERENCES class(id)
+                            class_id BIGINT REFERENCES class(id)
 );
 
 -- Insert data into class_time table
@@ -60,14 +60,14 @@ INSERT INTO class_time (day_of_week, start_time, end_time, class_id) VALUES
 
 -- Create student table with auto-incrementing primary key
 CREATE TABLE student (
-                         id SERIAL PRIMARY KEY,
+                         id BIGSERIAL PRIMARY KEY,
                          name VARCHAR(255),
                          tckn VARCHAR(20),
                          surname VARCHAR(255),
                          phone VARCHAR(20),
                          second_phone VARCHAR(20),
                          address VARCHAR(255),
-                         city VARCHAR(50), -- Changed to VARCHAR
+                         city VARCHAR(50),
                          registration_date TIMESTAMP,
                          update_time TIMESTAMP,
                          created_on TIMESTAMP NOT NULL
@@ -99,9 +99,9 @@ INSERT INTO student (name, tckn, surname, phone, second_phone, address, city, re
 
 -- Create student_class table with auto-incrementing primary key
 CREATE TABLE student_class (
-                               id SERIAL PRIMARY KEY,
-                               student_id INTEGER REFERENCES student(id),
-                               class_id INTEGER REFERENCES class(id)
+                               id BIGSERIAL PRIMARY KEY,
+                               student_id BIGINT REFERENCES student(id),
+                               class_id BIGINT REFERENCES class(id)
 );
 
 -- Insert data into student_class table
@@ -129,9 +129,9 @@ INSERT INTO student_class (student_id, class_id) VALUES
 
 -- Create teacher_class table with auto-incrementing primary key
 CREATE TABLE teacher_class (
-                               id SERIAL PRIMARY KEY,
-                               teacher_id INTEGER REFERENCES teacher(id),
-                               class_id INTEGER REFERENCES class(id)
+                               id BIGSERIAL PRIMARY KEY,
+                               teacher_id BIGINT REFERENCES teacher(id),
+                               class_id BIGINT REFERENCES class(id)
 );
 
 -- Insert data into teacher_class table

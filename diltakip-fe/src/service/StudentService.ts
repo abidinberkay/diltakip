@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { Page, Student } from "../interface/Student";
 
+// Fetch paginated students with filtering
 export async function fetchPaginatedStudents(
     page: number,
     size: number,
@@ -20,6 +21,20 @@ export async function fetchPaginatedStudents(
         return response.data;
     } catch (error) {
         console.error("Error fetching students:", error);
+        throw error;
+    }
+}
+
+// Update student details
+export async function updateStudent(student: Student): Promise<Student> {
+    try {
+        const response: AxiosResponse<Student> = await axios.put(
+            `http://localhost:8080/student/${student.id}`,
+            student
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Error updating student:", error);
         throw error;
     }
 }

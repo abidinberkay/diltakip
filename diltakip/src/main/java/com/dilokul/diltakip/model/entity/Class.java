@@ -1,4 +1,4 @@
-package com.dilokul.diltakip.model;
+package com.dilokul.diltakip.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,17 +10,23 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "student_class")
-public class StudentClass {
+@Table(name = "class")
+public class Class {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "student_id")
-    private String studentId;
+    private String name;
 
-    @Column(name = "class_id")
-    private String classId;
+    private String language;
+
+    @Column(name = "teacher_id")
+    private String teacherId;
+
+    private Long capacity;
+
+    private Long numberOfStudent;
 }
+

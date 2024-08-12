@@ -1,15 +1,13 @@
 package com.dilokul.diltakip.controller;
 
-import com.dilokul.diltakip.model.Student;
+import com.dilokul.diltakip.model.dto.StudentDto;
+import com.dilokul.diltakip.model.entity.Student;
 import com.dilokul.diltakip.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,5 +21,11 @@ public class StudentController {
             @RequestParam(required = false) String filter,
             Pageable pageable) {
         return ResponseEntity.ok(studentService.findAllAsPage(filter, pageable));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<StudentDto> findById(@PathVariable Long id) throws Exception {
+        StudentDto studentDto = studentService.findStudentById(id);
+        return ResponseEntity.ok(studentDto);
     }
 }

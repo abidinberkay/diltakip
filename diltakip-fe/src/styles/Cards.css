@@ -7,6 +7,15 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
 }
 
+.clickable-card-ogretmen {
+    cursor: default; /* Indicates non-clickable */
+    border: 2px solid #007bff; /* Border color */
+    border-radius: 0.25rem; /* Border radius */
+    background: linear-gradient(to bottom, #a3c2f0, #6ea0d3, #007bff); /* Blue gradient from light to dark */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
 /* General container styling */
 .container {
     margin-top: 20px;

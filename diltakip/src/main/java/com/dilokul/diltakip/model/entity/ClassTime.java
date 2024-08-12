@@ -1,4 +1,4 @@
-package com.dilokul.diltakip.model;
+package com.dilokul.diltakip.model.entity;
 
 import com.dilokul.diltakip.enums.DayOfWeekEnum;
 import jakarta.persistence.*;

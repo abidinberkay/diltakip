@@ -1,5 +1,5 @@
-// Student interface file (Student.ts or StudentInterfaces.ts)
-export interface Student {
+// Teacher.ts
+export interface Teacher {
     id: number;
     name: string;
     tckn: string;
@@ -8,12 +8,10 @@ export interface Student {
     city: string;
     secondPhone?: string;
     address: string;
-    registrationDate: string;
     updateTime?: string;
     createdOn: string;
 }
 
-// Page interface for paginated responses
 export interface Page<T> {
     content: T[];
     totalPages: number;
