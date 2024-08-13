@@ -28,4 +28,12 @@ public class StudentController {
         StudentDto studentDto = studentService.findStudentById(id);
         return ResponseEntity.ok(studentDto);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<StudentDto> updateStudent(
+            @PathVariable Long id,
+            @RequestBody StudentDto studentDto) throws Exception {
+        StudentDto updatedStudent = studentService.updateStudent(id, studentDto);
+        return ResponseEntity.ok(updatedStudent);
+    }
 }

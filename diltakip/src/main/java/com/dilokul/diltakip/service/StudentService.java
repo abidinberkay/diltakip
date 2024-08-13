@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,5 +69,25 @@ public class StudentService {
 
         studentDto.setClassDtoList(classDtoList);
         return studentDto;
+    }
+
+    @Transactional
+    public StudentDto updateStudent(Long id, StudentDto studentDto) throws Exception {
+        Student existingStudent = studentRepository.findById(id)
+                .orElseThrow(() -> new Exception("Student not found with id: " + id));
+
+        // Map updated fields from DTO to the existing entity
+        modelMapper.map(studentDto, existingStudent);
+
+        // Save the updated student
+        Student updatedStudent = studentRepository.save(existingStudent);
+
+        // Convert updated entity back to DTO
+        StudentDto updatedStudentDto = modelMapper.map(updatedStudent, StudentDto.class);
+
+        // Optionally, update related classes or other entities if needed
+        // ...
+
+        return updatedStudentDto;
     }
 }

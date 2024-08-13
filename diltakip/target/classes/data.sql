@@ -31,7 +31,9 @@ CREATE TABLE class (
                        id BIGSERIAL PRIMARY KEY,
                        name VARCHAR(255),
                        language VARCHAR(50),
-                       teacher_id BIGINT REFERENCES teacher(id)
+                       teacher_id BIGINT REFERENCES teacher(id),
+                       capacity BIGINT,
+                       number_of_students BIGINT
 );
 
 -- Insert data into class table
@@ -40,6 +42,12 @@ INSERT INTO class (name, language, teacher_id) VALUES
                                                    ('Fizik', 'İngilizce', 2),
                                                    ('Kimya', 'Türkçe', 3),
                                                    ('Biyoloji', 'Türkçe', 1);
+
+-- Update class table to set random capacity values and number_of_students
+-- For PostgreSQL
+UPDATE class
+SET capacity = FLOOR(5 + RANDOM() * 16),
+    number_of_students = FLOOR(RANDOM() * capacity);
 
 -- Create class_time table with auto-incrementing primary key
 CREATE TABLE class_time (

@@ -27,6 +27,7 @@ public class Class {
 
     private Long capacity;
 
+    @Column(name = "number_of_students")
     private Long numberOfStudent;
 }
 
