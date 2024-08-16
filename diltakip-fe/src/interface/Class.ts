@@ -6,6 +6,8 @@ export interface Class {
     name: string;
     language: string;
     teacherId: number;
+    capacity: number;
+    numberOfStudent: number;
     teacherDto?: Teacher; // Assuming you have a Teacher interface
 }
 

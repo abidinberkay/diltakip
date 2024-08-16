@@ -8,6 +8,7 @@ export interface Teacher {
     city: string;
     secondPhone?: string;
     address: string;
+    registrationDate: string;
     updateTime?: string;
     createdOn: string;
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { fetchPaginatedClasses } from "../service/ClassService";
+import { fetchPaginatedClasses } from '../service/ClassService';
 import { Class, Page } from '../interface/Class';
 import ClassTable from '../components/ClassTable';
 import ClassEdit from '../components/ClassEdit';
@@ -14,66 +14,49 @@ const ClassPanel: React.FC = () => {
     const [filter, setFilter] = useState<string>("");
     const [editingClass, setEditingClass] = useState<Class | null>(null);
 
-    useEffect(() => {
-        async function loadClasses() {
-            try {
-                setLoading(true);
-                const classesData = await fetchPaginatedClasses(currentPage, pageSize, filter);
-                setClassesPage(classesData);
-            } catch (error) {
-                console.error("Error fetching classes:", error);
-                setError("Sınıflar alınırken bir hata oluştu. Lütfen daha sonra tekrar deneyin.");
-            } finally {
-                setLoading(false);
-            }
+    const loadClasses = async () => {
+        try {
+            setLoading(true);
+            const classesData = await fetchPaginatedClasses(currentPage, pageSize, filter);
+            setClassesPage(classesData);
+        } catch (error) {
+            console.error('Error fetching classes:', error);
+            setError('Sınıflar alınırken bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+        } finally {
+            setLoading(false);
         }
+    };
 
+    useEffect(() => {
         loadClasses();
     }, [currentPage, pageSize, filter]);
 
-    const handlePageChange = (page: number) => {
-        setCurrentPage(page);
-    };
-
+    const handlePageChange = (page: number) => setCurrentPage(page);
     const handlePageSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setPageSize(parseInt(event.target.value, 10));
         setCurrentPage(0);
     };
-
     const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFilter(event.target.value);
         setCurrentPage(0);
     };
-
-    const handleClassClick = (classData: Class) => {
-        setEditingClass(classData);
+    const handleClassClick = (classData: Class) => setEditingClass(classData);
+    const handleUpdate = () => {
+        loadClasses(); // Refresh the class list after update
+        setEditingClass(null);
     };
-
-    const handleUpdate = (updatedClass: Class) => {
-        if (classesPage) {
-            const updatedClasses = classesPage.content.map(classData =>
-                classData.id === updatedClass.id ? updatedClass : classData
-            );
-            setClassesPage({ ...classesPage, content: updatedClasses });
-        }
-        setEditingClass(null); // Exit editing mode
-    };
-
-    const handleCancelEdit = () => {
-        setEditingClass(null); // Exit editing mode
-    };
+    const handleCancelEdit = () => setEditingClass(null);
 
     return (
-        <div className="container">
+        <div className="container mt-4">
             <div className="row">
                 <div className="col-12 mb-4">
-                    <div className="card clickable-card">
+                    <div className="card clickable-card-ogretmen">
                         <div className="card-body text-center">
-                            <h5 className="card-title">Sınıf Yönetim Sistemi</h5>
+                            <h5 className="card-title">Sınıflar</h5>
                         </div>
                     </div>
                 </div>
-
                 {editingClass ? (
                     <ClassEdit
                         classData={editingClass}
@@ -88,7 +71,7 @@ const ClassPanel: React.FC = () => {
                                 <div className="mb-4">
                                     <input
                                         type="text"
-                                        placeholder="Ara (Ad, Dil)"
+                                        placeholder="Ara (Ad/Soyad, Adres, Telefon, Şehir Tam İsmi)"
                                         className="form-control"
                                         value={filter}
                                         onChange={handleFilterChange}
@@ -100,7 +83,7 @@ const ClassPanel: React.FC = () => {
                                     handlePageSizeChange={handlePageSizeChange}
                                     pageSize={pageSize}
                                     totalPages={classesPage?.totalPages || 0}
-                                    currentPage={classesPage?.number || 0}
+                                    currentPage={currentPage}
                                     loading={loading}
                                     error={error}
                                     onClassClick={handleClassClick}

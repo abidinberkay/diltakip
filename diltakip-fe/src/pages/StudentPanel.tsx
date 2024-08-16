@@ -68,7 +68,7 @@ const StudentPanel: React.FC = () => {
         <div className="container">
             <div className="row">
                 <div className="col-12 mb-4">
-                    <div className="card clickable-card">
+                    <div className="card card-header-green">
                         <div className="card-body text-center">
                             <h5 className="card-title">Öğrenci Kayıt Sistemi</h5>
                         </div>

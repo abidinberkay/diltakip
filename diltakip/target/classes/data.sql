@@ -37,17 +37,11 @@ CREATE TABLE class (
 );
 
 -- Insert data into class table
-INSERT INTO class (name, language, teacher_id) VALUES
-                                                   ('Matematik', 'Türkçe', 1),
-                                                   ('Fizik', 'İngilizce', 2),
-                                                   ('Kimya', 'Türkçe', 3),
-                                                   ('Biyoloji', 'Türkçe', 1);
-
--- Update class table to set random capacity values and number_of_students
--- For PostgreSQL
-UPDATE class
-SET capacity = FLOOR(5 + RANDOM() * 16),
-    number_of_students = FLOOR(RANDOM() * capacity);
+INSERT INTO class (name, language, teacher_id, capacity, number_of_students) VALUES
+                                                                                 ('Matematik', 'Türkçe', 1, 20, 11),
+                                                                                 ('Fizik', 'İngilizce', 2, 15, 13),
+                                                                                 ('Kimya', 'Türkçe', 3, 18, 18),
+                                                                                 ('Biyoloji', 'Türkçe', 1, 8, 6);
 
 -- Create class_time table with auto-incrementing primary key
 CREATE TABLE class_time (
@@ -133,7 +127,8 @@ INSERT INTO student_class (student_id, class_id) VALUES
                                                      (17, 1),
                                                      (18, 2),
                                                      (19, 3),
-                                                     (20, 4);
+                                                     (20, 4),
+                                                     (21, 1);
 
 -- Create teacher_class table with auto-incrementing primary key
 CREATE TABLE teacher_class (

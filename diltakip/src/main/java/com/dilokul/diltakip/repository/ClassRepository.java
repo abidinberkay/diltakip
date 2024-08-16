@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 @Repository
 public interface ClassRepository extends JpaRepository<Class, Long> {
 
@@ -17,4 +19,6 @@ public interface ClassRepository extends JpaRepository<Class, Long> {
             String name,
             String language,
             Pageable pageable);
+
+    List<Class> findAllByTeacherId(Long id);
 }

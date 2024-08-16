@@ -7,18 +7,22 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
+    // Retrieve all teachers with pagination
     Page<Teacher> findAll(Pageable pageable);
 
-    Page<Teacher> findByNameContainingIgnoreCaseOrSurnameContainingIgnoreCaseOrAddressContainingIgnoreCaseOrPhoneContainingIgnoreCase(
+    // Filter teachers by name, surname, or phone with pagination
+    Page<Teacher> findByNameContainingIgnoreCaseOrSurnameContainingIgnoreCaseOrPhoneContainingIgnoreCase(
             String name,
             String surname,
-            String address,
             String phone,
             Pageable pageable);
 
+    // Filter teachers by city with pagination
     Page<Teacher> findByCity(CityEnum city, Pageable pageable);
 
 }

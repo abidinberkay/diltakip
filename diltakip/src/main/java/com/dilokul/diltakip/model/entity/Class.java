@@ -23,7 +23,7 @@ public class Class {
     private String language;
 
     @Column(name = "teacher_id")
-    private String teacherId;
+    private Long teacherId;
 
     private Long capacity;
 

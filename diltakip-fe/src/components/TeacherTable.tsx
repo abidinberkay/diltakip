@@ -1,6 +1,5 @@
 import React from 'react';
-import { Teacher } from '../interface/Teacher'; // Adjust the path according to your project structure
-
+import { Teacher } from '../interface/Teacher';
 
 interface TeacherTableProps {
     teachers: Teacher[];
@@ -11,6 +10,7 @@ interface TeacherTableProps {
     currentPage: number;
     loading: boolean;
     error: string | null;
+    onTeacherClick: (teacher: Teacher) => void; // Add prop for click handler
 }
 
 const TeacherTable: React.FC<TeacherTableProps> = ({
@@ -21,7 +21,8 @@ const TeacherTable: React.FC<TeacherTableProps> = ({
                                                        totalPages,
                                                        currentPage,
                                                        loading,
-                                                       error
+                                                       error,
+                                                       onTeacherClick
                                                    }) => {
     const renderPagination = () => {
         const pages = [];
@@ -38,70 +39,52 @@ const TeacherTable: React.FC<TeacherTableProps> = ({
     };
 
     return (
-        <div className="col-12 mb-4">
-            <div className="card">
-                <div className="card-body">
-                    {loading && <p>Yükleniyor...</p>}
-                    {error && <p className="text-danger">{error}</p>}
-                    {!loading && !error && teachers && (
-                        <>
-                            <div className="d-flex justify-content-between mb-3">
-                                <div>
-                                    <label htmlFor="pageSize" className="me-2">Sayfa Boyutu:</label>
-                                    <select id="pageSize" value={pageSize} onChange={handlePageSizeChange}
-                                            className="form-select">
-                                        <option value={5}>5</option>
-                                        <option value={10}>10</option>
-                                        <option value={20}>20</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <table className="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Öğretmen ID</th>
-                                    <th>Ad</th>
-                                    <th>Soyad</th>
-                                    <th>Telefon</th>
-                                    <th>Şehir</th>
-                                    <th>Adres</th>
-                                    <th>Oluşturulma Tarihi</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {teachers.map(teacher => (
-                                    <tr key={teacher.id}>
-                                        <td>{teacher.id}</td>
-                                        <td>{teacher.name}</td>
-                                        <td>{teacher.surname}</td>
-                                        <td>{teacher.phone}</td>
-                                        <td>{teacher.city}</td>
-                                        <td>{teacher.address}</td>
-                                        <td>{new Date(teacher.createdOn).toLocaleString()}</td>
-                                    </tr>
-                                ))}
-                                </tbody>
-                            </table>
-                            <nav>
-                                <ul className="pagination justify-content-center">
-                                    <li className={`page-item ${currentPage === 0 ? 'disabled' : ''}`}>
-                                        <button className="page-link"
-                                                onClick={() => handlePageChange(currentPage - 1)}>
-                                            Önceki
-                                        </button>
-                                    </li>
-                                    {renderPagination()}
-                                    <li className={`page-item ${currentPage === totalPages - 1 ? 'disabled' : ''}`}>
-                                        <button className="page-link"
-                                                onClick={() => handlePageChange(currentPage + 1)}>
-                                            Sonraki
-                                        </button>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </>
-                    )}
+        <div className="table-responsive">
+            {loading && <p>Yükleniyor...</p>}
+            {error && <p className="text-danger">{error}</p>}
+            <table className="table table-red table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Ad</th>
+                    <th scope="col">Soyad</th>
+                    <th scope="col">Telefon</th>
+                    <th scope="col">Şehir</th>
+                    <th scope="col">Adres</th>
+                </tr>
+                </thead>
+                <tbody>
+                {teachers.map((teacher) => (
+                    <tr
+                        key={teacher.id}
+                        onClick={() => onTeacherClick(teacher)} // Handle row click
+                        style={{ cursor: 'pointer' }}
+                    >
+                        <td>{teacher.name}</td>
+                        <td>{teacher.surname}</td>
+                        <td>{teacher.phone}</td>
+                        <td>{teacher.city}</td>
+                        <td>{teacher.address}</td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+            <div className="d-flex justify-content-between align-items-center">
+                <div>
+                    <select
+                        value={pageSize}
+                        onChange={handlePageSizeChange}
+                        className="form-select"
+                    >
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                    </select>
                 </div>
+                <nav>
+                    <ul className="pagination">
+                        {renderPagination()}
+                    </ul>
+                </nav>
             </div>
         </div>
     );

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/Cards.css';
 import { fetchPaginatedTeachers } from "../service/TeacherService";
-import { Teacher, Page } from '../interface/Teacher'; // Adjust the path according to your project structure
-
+import { Teacher, Page } from '../interface/Teacher';
 import TeacherTable from '../components/TeacherTable';
+import TeacherEdit from '../components/TeacherEdit'; // Import the new component
 
 const TeacherPanel: React.FC = () => {
     const [teachersPage, setTeachersPage] = useState<Page<Teacher> | undefined>();
@@ -13,6 +13,7 @@ const TeacherPanel: React.FC = () => {
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [pageSize, setPageSize] = useState<number>(10);
     const [filter, setFilter] = useState<string>("");
+    const [editingTeacher, setEditingTeacher] = useState<Teacher | null>(null); // Add state for editing
 
     useEffect(() => {
         async function loadTeachers() {
@@ -45,43 +46,70 @@ const TeacherPanel: React.FC = () => {
         setCurrentPage(0);
     };
 
+    const handleTeacherClick = (teacher: Teacher) => {
+        setEditingTeacher(teacher);
+    };
+
+    const handleUpdate = (updatedTeacher: Teacher) => {
+        if (teachersPage) {
+            const updatedTeachers = teachersPage.content.map(teacher =>
+                teacher.id === updatedTeacher.id ? updatedTeacher : teacher
+            );
+            setTeachersPage({ ...teachersPage, content: updatedTeachers });
+        }
+        setEditingTeacher(null); // Exit editing mode
+    };
+
+    const handleCancelEdit = () => {
+        setEditingTeacher(null); // Exit editing mode
+    };
+
     return (
         <div className="container">
             <div className="row">
                 <div className="col-12 mb-4">
-                    <div className="card clickable-card clickable-card-ogretmen">
+                    <div className="card card-header-red">
                         <div className="card-body text-center">
                             <h5 className="card-title">Öğretmen Kayıt Sistemi</h5>
                         </div>
                     </div>
                 </div>
 
-                <div className="col-12 mb-4">
-                    <div className="card">
-                        <div className="card-body">
-                            <h5 className="card-title">Öğretmenler</h5>
-                            <div className="mb-4">
-                                <input
-                                    type="text"
-                                    placeholder="Ara (Ad/Soyad, Adres, Telefon, Şehir Tam İsmi)"
-                                    className="form-control"
-                                    value={filter}
-                                    onChange={handleFilterChange}
+                {editingTeacher ? (
+                    <TeacherEdit
+                        teacher={editingTeacher}
+                        onUpdate={handleUpdate}
+                        onCancel={handleCancelEdit}
+                    />
+                ) : (
+                    <div className="col-12 mb-4">
+                        <div className="card">
+                            <div className="card-body">
+                                <h5 className="card-title">Öğretmenler</h5>
+                                <div className="mb-4">
+                                    <input
+                                        type="text"
+                                        placeholder="Ara (Ad/Soyad, Adres, Telefon, Şehir)"
+                                        className="form-control"
+                                        value={filter}
+                                        onChange={handleFilterChange}
+                                    />
+                                </div>
+                                <TeacherTable
+                                    teachers={teachersPage?.content || []}
+                                    handlePageChange={handlePageChange}
+                                    handlePageSizeChange={handlePageSizeChange}
+                                    pageSize={pageSize}
+                                    totalPages={teachersPage?.totalPages || 0}
+                                    currentPage={teachersPage?.number || 0}
+                                    loading={loading}
+                                    error={error}
+                                    onTeacherClick={handleTeacherClick} // Pass the handler to the table
                                 />
                             </div>
-                            <TeacherTable
-                                teachers={teachersPage?.content || []}
-                                handlePageChange={handlePageChange}
-                                handlePageSizeChange={handlePageSizeChange}
-                                pageSize={pageSize}
-                                totalPages={teachersPage?.totalPages || 0}
-                                currentPage={teachersPage?.number || 0}
-                                loading={loading}
-                                error={error}
-                            />
                         </div>
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );

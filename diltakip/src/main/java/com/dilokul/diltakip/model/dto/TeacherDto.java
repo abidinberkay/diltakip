@@ -4,6 +4,7 @@ import com.dilokul.diltakip.enums.CityEnum;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class TeacherDto {
@@ -17,4 +18,5 @@ public class TeacherDto {
     private String address;
     private LocalDateTime updateTime;
     private LocalDateTime createdOn;
+    private List<ClassDto> classDtoList;
 }

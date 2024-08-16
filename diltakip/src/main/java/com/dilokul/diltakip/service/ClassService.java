@@ -1,8 +1,11 @@
 package com.dilokul.diltakip.service;
 
 import com.dilokul.diltakip.model.dto.ClassDto;
+import com.dilokul.diltakip.model.dto.TeacherDto;
 import com.dilokul.diltakip.model.entity.Class;
+import com.dilokul.diltakip.model.entity.Teacher;
 import com.dilokul.diltakip.repository.ClassRepository;
+import com.dilokul.diltakip.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -16,6 +19,7 @@ public class ClassService {
 
     private final ClassRepository classRepository;
     private final ModelMapper modelMapper;
+    private final TeacherRepository teacherRepository;
 
     public ClassDto addClass(ClassDto classDto) {
         // Map DTO to entity
@@ -43,8 +47,22 @@ public class ClassService {
                     filter, filter, pageable);
         }
 
-        return classPage.map(classEntity -> modelMapper.map(classEntity, ClassDto.class));
+        // Map each Class entity to ClassDto and populate teacherDto
+        return classPage.map(classEntity -> {
+            ClassDto classDto = modelMapper.map(classEntity, ClassDto.class);
+
+            // Fetch the Teacher entity and map it to teacherDto
+            Teacher teacher = teacherRepository.findById(classEntity.getTeacherId())
+                    .orElse(null);
+
+            if (teacher != null) {
+                classDto.setTeacherDto(modelMapper.map(teacher, TeacherDto.class));
+            }
+
+            return classDto;
+        });
     }
+
 
     @Transactional
     public ClassDto findClassById(Long id) throws Exception {
@@ -61,6 +79,10 @@ public class ClassService {
 
         // Map updated fields from DTO to the existing entity
         modelMapper.map(classDto, existingClass);
+
+        Teacher teacherToBeAdded = teacherRepository.findById(classDto.getTeacherId()).get();
+
+        existingClass.setTeacherId(teacherToBeAdded.getId());
 
         // Save the updated class
         Class updatedClass = classRepository.save(existingClass);
