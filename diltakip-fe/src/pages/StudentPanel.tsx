@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/Cards.css';
+import '../styles/GeneralStyle.css';
 import { fetchPaginatedStudents } from "../service/StudentService";
 import { Student, Page } from '../interface/Student';
 import StudentTable from '../components/StudentTable';
