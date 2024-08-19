@@ -5,6 +5,39 @@ DROP TABLE IF EXISTS class_time;
 DROP TABLE IF EXISTS class;
 DROP TABLE IF EXISTS student;
 DROP TABLE IF EXISTS teacher;
+DROP TABLE IF EXISTS user_roles;
+DROP TABLE IF EXISTS role;
+DROP TABLE IF EXISTS appusers;
+
+-- Create the Roles table
+                     CREATE TABLE IF NOT EXISTS role (
+                                    id BIGSERIAL PRIMARY KEY,
+                                    name VARCHAR(255) NOT NULL
+);
+
+-- Create the Users table
+CREATE TABLE IF NOT EXISTS appusers (
+                                         id BIGSERIAL PRIMARY KEY,
+                                         first_name VARCHAR(255),
+                                         last_name VARCHAR(255),
+                                         email VARCHAR(255) UNIQUE NOT NULL,
+                                         password VARCHAR(255) NOT NULL,
+                                         phone VARCHAR(20),
+                                         update_time TIMESTAMP,
+                                         created_on TIMESTAMP NOT NULL,
+                                         notification_read_date TIMESTAMP,
+                                         CONSTRAINT email_unique UNIQUE (email)
+);
+
+-- Create the User_Roles join table
+                               CREATE TABLE IF NOT EXISTS user_roles (
+                                          user_id BIGINT NOT NULL,
+                                          role_id BIGINT NOT NULL,
+                                          PRIMARY KEY (user_id, role_id),
+                                          FOREIGN KEY (user_id) REFERENCES appusers(id) ON DELETE CASCADE,
+                                          FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE
+);
+
 
 -- Create teacher table with auto-incrementing primary key
 CREATE TABLE teacher (
@@ -143,3 +176,19 @@ INSERT INTO teacher_class (teacher_id, class_id) VALUES
                                                      (2, 2),
                                                      (3, 3),
                                                      (1, 4);
+
+-- Insert data into the role table
+INSERT INTO role (name) VALUES
+                            ('ROLE_USER'),
+                            ('ROLE_ADMIN');
+
+-- Insert data into the appusers table with hashed password (replace 'your_hashed_password_here' with the actual hashed password)
+INSERT INTO appusers (first_name, last_name, email, password, phone, update_time, created_on, notification_read_date) VALUES
+                                                                                                                          ('John', 'Doe', 'john.doe@example.com', '$2b$10$your_hashed_password_here', '555-0000', NOW(), NOW(), NOW()),
+                                                                                                                          ('Jane', 'Smith', 'jane.smith@example.com', '$2b$10$your_hashed_password_here', '555-0001', NOW(), NOW(), NOW());
+
+-- Insert data into the user_roles table to assign roles to users
+INSERT INTO user_roles (user_id, role_id) VALUES
+                                              (1, 1),  -- Assign ROLE_USER to John Doe
+                                              (2, 1),  -- Assign ROLE_USER to Jane Smith
+                                              (1, 2);  -- Assign ROLE_ADMIN to John Doe (John Doe will have both USER and ADMIN roles)

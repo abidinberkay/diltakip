@@ -86,7 +86,7 @@ const ClassEdit: React.FC<ClassEditProps> = ({ classData, onUpdate, onCancel }) 
                 />
             </div>
             <div className="mb-3">
-                <label className="form-label">Kapacite</label>
+                <label className="form-label">Kapasite</label>
                 <input
                     type="number"
                     className="form-control"

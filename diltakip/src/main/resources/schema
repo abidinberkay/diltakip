@@ -1,0 +1,103 @@
+-- Drop tables if they exist
+DROP TABLE IF EXISTS teacher_class;
+DROP TABLE IF EXISTS student_class;
+DROP TABLE IF EXISTS class_time;
+DROP TABLE IF EXISTS class;
+DROP TABLE IF EXISTS student;
+DROP TABLE IF EXISTS teacher;
+DROP TABLE IF EXISTS User_Roles;
+DROP TABLE IF EXISTS Role;
+DROP TABLE IF EXISTS Users;
+
+-- -- Create the Roles table
+-- CREATE TABLE IF NOT EXISTS role (
+--                                     id BIGSERIAL PRIMARY KEY,
+--                                     name VARCHAR(255) NOT NULL
+-- );
+--
+-- -- Create the Users table
+-- CREATE TABLE IF NOT EXISTS users (
+--                                      id BIGSERIAL PRIMARY KEY,
+--                                      first_name VARCHAR(255),
+--                                      last_name VARCHAR(255),
+--                                      email VARCHAR(255) UNIQUE NOT NULL,
+--                                      password VARCHAR(255) NOT NULL,
+--                                      phone VARCHAR(20),
+--                                      update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+--                                      created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--                                      notification_read_date TIMESTAMP,
+--                                      CONSTRAINT email_unique UNIQUE (email)
+-- );
+--
+-- -- Create the User_Roles join table
+-- CREATE TABLE IF NOT EXISTS user_roles (
+--                                           user_id BIGINT NOT NULL,
+--                                           role_id BIGINT NOT NULL,
+--                                           PRIMARY KEY (user_id, role_id),
+--                                           FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+--                                           FOREIGN KEY (role_id) REFERENCES Role(id) ON DELETE CASCADE
+-- );
+
+
+
+-- Create teacher table with auto-incrementing primary key
+CREATE TABLE teacher (
+                         id BIGSERIAL PRIMARY KEY,
+                         name VARCHAR(255),
+                         tckn VARCHAR(20),
+                         surname VARCHAR(255),
+                         phone VARCHAR(20),
+                         second_phone VARCHAR(20),
+                         address VARCHAR(255),
+                         city VARCHAR(50),
+                         update_time TIMESTAMP,
+                         created_on TIMESTAMP NOT NULL
+);
+
+-- Create class table with auto-incrementing primary key
+CREATE TABLE class (
+                       id BIGSERIAL PRIMARY KEY,
+                       name VARCHAR(255),
+                       language VARCHAR(50),
+                       teacher_id BIGINT REFERENCES teacher(id),
+                       capacity BIGINT,
+                       number_of_students BIGINT
+);
+
+-- Create class_time table with auto-incrementing primary key
+CREATE TABLE class_time (
+                            id BIGSERIAL PRIMARY KEY,
+                            day_of_week VARCHAR(20),
+                            start_time TIME,
+                            end_time TIME,
+                            class_id BIGINT REFERENCES class(id)
+);
+
+-- Create student table with auto-incrementing primary key
+CREATE TABLE student (
+                         id BIGSERIAL PRIMARY KEY,
+                         name VARCHAR(255),
+                         tckn VARCHAR(20),
+                         surname VARCHAR(255),
+                         phone VARCHAR(20),
+                         second_phone VARCHAR(20),
+                         address VARCHAR(255),
+                         city VARCHAR(50),
+                         registration_date TIMESTAMP,
+                         update_time TIMESTAMP,
+                         created_on TIMESTAMP NOT NULL
+);
+
+-- Create student_class table with auto-incrementing primary key
+CREATE TABLE student_class (
+                               id BIGSERIAL PRIMARY KEY,
+                               student_id BIGINT REFERENCES student(id),
+                               class_id BIGINT REFERENCES class(id)
+);
+
+-- Create teacher_class table with auto-incrementing primary key
+CREATE TABLE teacher_class (
+                               id BIGSERIAL PRIMARY KEY,
+                               teacher_id BIGINT REFERENCES teacher(id),
+                               class_id BIGINT REFERENCES class(id)
+);

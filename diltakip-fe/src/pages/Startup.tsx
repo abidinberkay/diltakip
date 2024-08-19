@@ -1,50 +1,47 @@
-// src/pages/StartupScreen.tsx
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Card, Row, Col } from 'react-bootstrap';
 import '../styles/StartupCss.css'; // Import the CSS specific to StartupScreen
 
+// Import the custom icons
+import { ReactComponent as StudentIcon } from '../icons/students.svg';
+import { ReactComponent as TeacherIcon } from '../icons/teacher.svg';
+import { ReactComponent as ClassIcon } from '../icons/students.svg';
+
 const StartupScreen: React.FC = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="startup-container mt-4">
-            <h2 className="mb-4">Hoşgeldiniz! Lütfen Bir Hizmet Seçin</h2>
+            <Card className="welcome-card mb-4">
+                <Card.Body>
+                    <Card.Title className="welcome-title">
+                        HİZMET SEÇİNİZ
+                    </Card.Title>
+                </Card.Body>
+            </Card>
             <Row>
                 <Col md={4}>
-                    <Card className="text-center mb-4">
+                    <Card className="text-center mb-4" onClick={() => navigate('/ogrenci')} style={{ cursor: 'pointer' }}>
                         <Card.Body>
+                            <StudentIcon style={{ width: '60px', height: '60px', marginBottom: '1rem' }} />
                             <Card.Title>Öğrenciler</Card.Title>
-                            <Card.Text>
-                                Öğrenci yönetim paneline erişin.
-                            </Card.Text>
-                            <Link to="/ogrenci" className="btn btn-primary">
-                                Öğrenciler
-                            </Link>
                         </Card.Body>
                     </Card>
                 </Col>
                 <Col md={4}>
-                    <Card className="text-center mb-4">
+                    <Card className="text-center mb-4" onClick={() => navigate('/ogretmen')} style={{ cursor: 'pointer' }}>
                         <Card.Body>
+                            <TeacherIcon style={{ width: '60px', height: '60px', marginBottom: '1rem' }} />
                             <Card.Title>Öğretmenler</Card.Title>
-                            <Card.Text>
-                                Öğretmen yönetim paneline erişin.
-                            </Card.Text>
-                            <Link to="/ogretmen" className="btn btn-primary">
-                                Öğretmenler
-                            </Link>
                         </Card.Body>
                     </Card>
                 </Col>
                 <Col md={4}>
-                    <Card className="text-center mb-4">
+                    <Card className="text-center mb-4" onClick={() => navigate('/siniflar')} style={{ cursor: 'pointer' }}>
                         <Card.Body>
+                            <ClassIcon style={{ width: '60px', height: '60px', marginBottom: '1rem' }} />
                             <Card.Title>Sınıflar</Card.Title>
-                            <Card.Text>
-                                Sınıf yönetim paneline erişin.
-                            </Card.Text>
-                            <Link to="/siniflar" className="btn btn-primary">
-                                Sınıflar
-                            </Link>
                         </Card.Body>
                     </Card>
                 </Col>

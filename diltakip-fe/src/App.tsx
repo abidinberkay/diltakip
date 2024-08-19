@@ -1,12 +1,12 @@
-// src/App.tsx
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import StudentPanel from './pages/StudentPanel';
 import TeacherPanel from './pages/TeacherPanel';
 import ClassPanel from './pages/ClassPanel';
-import StartupScreen from './pages/Startup'; // Import the StartupScreen component
-import './App.css';
+import StartupScreen from './pages/Startup';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 function App() {
     return (
@@ -40,7 +40,6 @@ function App() {
                 <div id="main-content" className="flex-grow-1">
                     <div className="container mt-4">
                         <Routes>
-                            {/* Set root path to display StartupScreen */}
                             <Route path="/" element={<StartupScreen />} />
                             <Route path="/ogrenci" element={<StudentPanel />} />
                             <Route path="/ogretmen" element={<TeacherPanel />} />

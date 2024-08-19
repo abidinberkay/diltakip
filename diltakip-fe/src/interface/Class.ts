@@ -9,6 +9,7 @@ export interface Class {
     capacity: number;
     numberOfStudent: number;
     teacherDto?: Teacher; // Assuming you have a Teacher interface
+    full: boolean;
 }
 
 // Page interface for paginated responses

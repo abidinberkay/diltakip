@@ -59,6 +59,10 @@ public class ClassService {
                 classDto.setTeacherDto(modelMapper.map(teacher, TeacherDto.class));
             }
 
+            if(classEntity.getNumberOfStudent() >= classEntity.getCapacity()) {
+                classDto.setFull(true);
+            }
+
             return classDto;
         });
     }
@@ -69,7 +73,11 @@ public class ClassService {
         Class classEntity = classRepository.findById(id)
                 .orElseThrow(() -> new Exception("Class not found with id: " + id));
 
-        return modelMapper.map(classEntity, ClassDto.class);
+        var classDto = modelMapper.map(classEntity, ClassDto.class);
+        if(classEntity.getNumberOfStudent() >= classEntity.getCapacity()) {
+            classDto.setFull(true);
+        }
+        return classDto;
     }
 
     @Transactional

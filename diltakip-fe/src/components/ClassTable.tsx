@@ -1,5 +1,6 @@
 import React from 'react';
 import { Class } from '../interface/Class';
+import '../styles/GeneralStyle.css'
 
 interface ClassTableProps {
     classes: Class[];
@@ -28,7 +29,7 @@ const ClassTable: React.FC<ClassTableProps> = ({
         <div>
             {loading && <p>Loading...</p>}
             {error && <p className="text-danger">{error}</p>}
-            {!loading && classes.length === 0 && <p>No classes found.</p>}
+            {!loading && classes.length === 0 && <p>Sınıf bulunamadı.</p>}
 
             <table className="table table-hover">
                 <thead>
@@ -37,15 +38,21 @@ const ClassTable: React.FC<ClassTableProps> = ({
                     <th>Ad</th>
                     <th>Dil</th>
                     <th>Öğretmen Adı</th>
+                    <th>Doluluk</th> {/* New column header for "Doluluk" */}
                 </tr>
                 </thead>
                 <tbody>
                 {classes.map((classData) => (
-                    <tr key={classData.id} onClick={() => onClassClick(classData)} style={{ cursor: 'pointer' }}>
+                    <tr
+                        key={classData.id}
+                        onClick={() => onClassClick(classData)}
+                        style={{ cursor: 'pointer' }}
+                    >
                         <td>{classData.id}</td>
                         <td>{classData.name}</td>
                         <td>{classData.language}</td>
                         <td>{classData.teacherDto ? `${classData.teacherDto.name} ${classData.teacherDto.surname}` : 'Unknown'}</td>
+                        <td>{classData.full ? 'Dolu' : 'Boş'}</td> {/* Display "Dolu" if full, otherwise "Boş" */}
                     </tr>
                 ))}
                 </tbody>
@@ -55,7 +62,11 @@ const ClassTable: React.FC<ClassTableProps> = ({
                 <div>
                     <label>
                         Sayfa Boyutu:
-                        <select value={pageSize} onChange={handlePageSizeChange} className="form-select d-inline-block w-auto ms-2">
+                        <select
+                            value={pageSize}
+                            onChange={handlePageSizeChange}
+                            className="form-select d-inline-block w-auto ms-2"
+                        >
                             <option value={5}>5</option>
                             <option value={10}>10</option>
                             <option value={20}>20</option>
