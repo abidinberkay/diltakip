@@ -15,6 +15,9 @@ export async function fetchPaginatedClasses(
                 page: page,
                 size: size,
                 filter: filter
+            },
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('cookietoken')
             }
         });
 
@@ -30,7 +33,12 @@ export async function addClass(classDto: Class): Promise<Class> {
     try {
         const response: AxiosResponse<Class> = await axios.post(
             "http://localhost:8080/class",
-            classDto
+            classDto,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('cookietoken')
+                }
+            }
         );
         return response.data;
     } catch (error) {
@@ -43,8 +51,13 @@ export async function addClass(classDto: Class): Promise<Class> {
 export async function updateClass(id: number, classDto: Class): Promise<Class> {
     try {
         const response: AxiosResponse<Class> = await axios.put(
-            `http://localhost:8080/class/${id}`,  // Ensure this is correct
-            classDto
+            `http://localhost:8080/class/${id}`,
+            classDto,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('cookietoken')
+                }
+            }
         );
         return response.data;
     } catch (error) {
@@ -53,11 +66,14 @@ export async function updateClass(id: number, classDto: Class): Promise<Class> {
     }
 }
 
-
 // Delete a class
 export async function deleteClass(id: number): Promise<void> {
     try {
-        await axios.delete(`http://localhost:8080/class/${id}`);
+        await axios.delete(`http://localhost:8080/class/${id}`, {
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('cookietoken')
+            }
+        });
     } catch (error) {
         console.error("Error deleting class:", error);
         throw error;
@@ -68,7 +84,12 @@ export async function deleteClass(id: number): Promise<void> {
 export async function findClassById(id: number): Promise<Class> {
     try {
         const response: AxiosResponse<Class> = await axios.get(
-            `http://localhost:8080/class/${id}`
+            `http://localhost:8080/class/${id}`,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('cookietoken')
+                }
+            }
         );
         return response.data;
     } catch (error) {

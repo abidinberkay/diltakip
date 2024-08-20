@@ -4,8 +4,15 @@ import { fetchPaginatedClasses } from '../service/ClassService';
 import { Class, Page } from '../interface/Class';
 import ClassTable from '../components/ClassTable';
 import ClassEdit from '../components/ClassEdit';
+import {useNavigate} from "react-router-dom";
 
 const ClassPanel: React.FC = () => {
+
+    const navigate = useNavigate();
+    if(!sessionStorage.getItem('cookietoken')) {
+        navigate('/login')
+    }
+
     const [classesPage, setClassesPage] = useState<Page<Class> | undefined>();
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);

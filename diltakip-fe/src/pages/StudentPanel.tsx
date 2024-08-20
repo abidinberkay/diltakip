@@ -4,9 +4,14 @@ import '../styles/GeneralStyle.css';
 import { fetchPaginatedStudents } from "../service/StudentService";
 import { Student, Page } from '../interface/Student';
 import StudentTable from '../components/StudentTable';
-import StudentEdit from '../components/StudentEdit'; // Import the new component
+import StudentEdit from '../components/StudentEdit';
+import {useNavigate} from "react-router-dom"; // Import the new component
 
 const StudentPanel: React.FC = () => {
+    const navigate = useNavigate();
+    if(!sessionStorage.getItem('cookietoken')) {
+        navigate('/login')
+    }
     const [studentsPage, setStudentsPage] = useState<Page<Student> | undefined>();
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);

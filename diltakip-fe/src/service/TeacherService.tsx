@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { Teacher, Page } from '../interface/Teacher'; // Adjust the path according to your project structure
 
+// Fetch paginated teachers with filtering
 export async function fetchPaginatedTeachers(
     page: number,
     size: number,
@@ -14,6 +15,9 @@ export async function fetchPaginatedTeachers(
                 page: page,
                 size: size,
                 filter: filter
+            },
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('cookietoken')
             }
         });
 
@@ -24,13 +28,16 @@ export async function fetchPaginatedTeachers(
     }
 }
 
-// Export the function to make it available for other components
+// Update teacher details
 export async function updateTeacher(teacher: Teacher): Promise<Teacher> {
     try {
         const response: AxiosResponse<Teacher> = await axios({
             method: "put",
             url: `http://localhost:8080/teacher/${teacher.id}`,
-            data: teacher
+            data: teacher,
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('cookietoken')
+            }
         });
 
         return response.data;
@@ -40,12 +47,15 @@ export async function updateTeacher(teacher: Teacher): Promise<Teacher> {
     }
 }
 
-// New method to fetch all teachers for the combo box
+// Fetch all teachers for the combo box
 export async function fetchAllTeachers(): Promise<Teacher[]> {
     try {
         const response: AxiosResponse<Teacher[]> = await axios({
             method: "get",
             url: "http://localhost:8080/teacher/list",
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('cookietoken')
+            }
         });
 
         return response.data;

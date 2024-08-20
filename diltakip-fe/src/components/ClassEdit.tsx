@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Class } from '../interface/Class';
-import { updateClass } from '../service/ClassService';
-import { Teacher } from '../interface/Teacher';
-import { fetchAllTeachers } from '../service/TeacherService';
+import React, {useState, useEffect} from 'react';
+import {Class} from '../interface/Class';
+import {updateClass} from '../service/ClassService';
+import {Teacher} from '../interface/Teacher';
+import {fetchAllTeachers} from '../service/TeacherService';
 
 interface ClassEditProps {
     classData: Class;
@@ -10,7 +10,7 @@ interface ClassEditProps {
     onCancel: () => void;
 }
 
-const ClassEdit: React.FC<ClassEditProps> = ({ classData, onUpdate, onCancel }) => {
+const ClassEdit: React.FC<ClassEditProps> = ({classData, onUpdate, onCancel}) => {
     const [editedClass, setEditedClass] = useState<Class>(classData);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
@@ -31,8 +31,8 @@ const ClassEdit: React.FC<ClassEditProps> = ({ classData, onUpdate, onCancel }) 
     }, []);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        setEditedClass({ ...editedClass, [name]: value });
+        const {name, value} = event.target;
+        setEditedClass({...editedClass, [name]: value});
     };
 
     const handleTeacherChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

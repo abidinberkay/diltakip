@@ -4,9 +4,16 @@ import '../styles/GeneralStyle.css';
 import { fetchPaginatedTeachers } from "../service/TeacherService";
 import { Teacher, Page } from '../interface/Teacher';
 import TeacherTable from '../components/TeacherTable';
-import TeacherEdit from '../components/TeacherEdit'; // Import the new component
+import TeacherEdit from '../components/TeacherEdit';
+import {useNavigate} from "react-router-dom"; // Import the new component
 
 const TeacherPanel: React.FC = () => {
+
+    const navigate = useNavigate();
+    if(!sessionStorage.getItem('cookietoken')) {
+        navigate('/login')
+    }
+
     const [teachersPage, setTeachersPage] = useState<Page<Teacher> | undefined>();
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);

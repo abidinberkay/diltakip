@@ -43,6 +43,7 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())  // Disable CSRF protection
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()  // Permit all requests to /auth/**
+                        .requestMatchers("/check-auth").permitAll()  // Ensure /check-auth is also permitted
                         .anyRequest().authenticated()  // Require authentication for any other request
                 )
                 .sessionManagement(session -> session

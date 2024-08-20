@@ -15,6 +15,9 @@ export async function fetchPaginatedStudents(
                 page: page,
                 size: size,
                 filter: filter
+            },
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('cookietoken')
             }
         });
 
@@ -30,7 +33,12 @@ export async function updateStudent(student: Student): Promise<Student> {
     try {
         const response: AxiosResponse<Student> = await axios.put(
             `http://localhost:8080/student/${student.id}`,
-            student
+            student,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('cookietoken')
+                }
+            }
         );
         return response.data;
     } catch (error) {

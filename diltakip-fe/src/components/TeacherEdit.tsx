@@ -31,112 +31,108 @@ const TeacherEdit: React.FC<TeacherEditProps> = ({ teacher, onUpdate, onCancel }
     };
 
     return (
-        <div className="col-12 mb-4">
-            <div className="card">
-                <div className="card-body">
-                    <h5 className="card-title">Edit Teacher</h5>
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-3">
-                            <label className="form-label">Name</label>
-                            <input
-                                type="text"
-                                name="name"
-                                className="form-control"
-                                value={editedTeacher.name}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Surname</label>
-                            <input
-                                type="text"
-                                name="surname"
-                                className="form-control"
-                                value={editedTeacher.surname}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">TCKN</label>
-                            <input
-                                type="text"
-                                name="tckn"
-                                className="form-control"
-                                value={editedTeacher.tckn}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Phone</label>
-                            <input
-                                type="text"
-                                name="phone"
-                                className="form-control"
-                                value={editedTeacher.phone}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Second Phone</label>
-                            <input
-                                type="text"
-                                name="secondPhone"
-                                className="form-control"
-                                value={editedTeacher.secondPhone || ''}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">City</label>
-                            <input
-                                type="text"
-                                name="city"
-                                className="form-control"
-                                value={editedTeacher.city}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Address</label>
-                            <input
-                                type="text"
-                                name="address"
-                                className="form-control"
-                                value={editedTeacher.address}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="registrationDate" className="form-label">Kayıt Tarihi</label>
-                            <input
-                                type="text"
-                                id="registrationDate"
-                                name="registrationDate"
-                                className="form-control"
-                                value={editedTeacher.createdOn}
-                                disabled // Assuming this is not editable
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Güncelleme Tarihi</label>
-                            <input
-                                type="text"
-                                id="registrationDate"
-                                name="registrationDate"
-                                className="form-control"
-                                value={editedTeacher.updateTime}
-                                disabled // Assuming this is not editable
-                            />
-                        </div>
-                        <button type="submit" className="btn btn-primary" disabled={loading}>
-                            {loading ? 'Saving...' : 'Save'}
-                        </button>
-                        <button type="button" className="btn btn-secondary ms-2" onClick={onCancel} disabled={loading}>
-                            Cancel
-                        </button>
-                    </form>
+        <div className="container">
+            <h5 className="card-title">Öğretmen Düzenle</h5>
+            <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                    <label className="form-label">İsim</label>
+                    <input
+                        type="text"
+                        name="name"
+                        className="form-control"
+                        value={editedTeacher.name}
+                        onChange={handleChange}
+                    />
                 </div>
-            </div>
+                <div className="mb-3">
+                    <label className="form-label">Soyisim</label>
+                    <input
+                        type="text"
+                        name="surname"
+                        className="form-control"
+                        value={editedTeacher.surname}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">TCKN</label>
+                    <input
+                        type="text"
+                        name="tckn"
+                        className="form-control"
+                        value={editedTeacher.tckn}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Telefon</label>
+                    <input
+                        type="text"
+                        name="phone"
+                        className="form-control"
+                        value={editedTeacher.phone}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">İkinci Telefon</label>
+                    <input
+                        type="text"
+                        name="secondPhone"
+                        className="form-control"
+                        value={editedTeacher.secondPhone || ''}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Şehir</label>
+                    <input
+                        type="text"
+                        name="city"
+                        className="form-control"
+                        value={editedTeacher.city}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Adres</label>
+                    <input
+                        type="text"
+                        name="address"
+                        className="form-control"
+                        value={editedTeacher.address}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="registrationDate" className="form-label">Kayıt Tarihi</label>
+                    <input
+                        type="text"
+                        id="registrationDate"
+                        name="registrationDate"
+                        className="form-control"
+                        value={editedTeacher.createdOn}
+                        disabled // Assuming this is not editable
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Güncelleme Tarihi</label>
+                    <input
+                        type="text"
+                        id="registrationDate"
+                        name="registrationDate"
+                        className="form-control"
+                        value={editedTeacher.updateTime}
+                        disabled // Assuming this is not editable
+                    />
+                </div>
+                <button type="submit" className="btn btn-primary" disabled={loading}>
+                    {loading ? 'Saving...' : 'Save'}
+                </button>
+                <button type="button" className="btn btn-secondary ms-2" onClick={onCancel} disabled={loading}>
+                    Cancel
+                </button>
+            </form>
         </div>
     );
 };
