@@ -34,6 +34,7 @@ public class Users {
     private String email;
     private String password;
     private String phone;
+    private Long companyId;
 
     @UpdateTimestamp
     @Column(name = "update_time")
@@ -42,9 +43,6 @@ public class Users {
     @Column(name = "created_on", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime createdOn;
-
-    @Column(name = "notification_read_date")
-    private LocalDateTime notificationReadDate;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(	name = "User_Roles",

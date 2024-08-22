@@ -103,6 +103,7 @@ const ClassEdit: React.FC<ClassEditProps> = ({classData, onUpdate, onCancel}) =>
                     name="numberOfStudent"
                     value={editedClass.numberOfStudent}
                     onChange={handleInputChange}
+                    disabled
                 />
             </div>
             <div className="mb-3">

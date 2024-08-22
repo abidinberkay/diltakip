@@ -6,6 +6,7 @@ import com.dilokul.diltakip.model.entity.Class;
 import com.dilokul.diltakip.model.entity.Teacher;
 import com.dilokul.diltakip.repository.ClassRepository;
 import com.dilokul.diltakip.repository.TeacherRepository;
+import com.dilokul.diltakip.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ public class ClassService {
     private final ClassRepository classRepository;
     private final ModelMapper modelMapper;
     private final TeacherRepository teacherRepository;
+    private final UsersRepository usersRepository;
 
     public ClassDto addClass(ClassDto classDto) {
         // Map DTO to entity
@@ -37,14 +39,16 @@ public class ClassService {
         return classPage.map(classEntity -> modelMapper.map(classEntity, ClassDto.class));
     }
 
-    public Page<ClassDto> findAllAsPage(String filter, Pageable pageable) {
+    public Page<ClassDto> findAllAsPage(String filter, Pageable pageable, String userEmail) {
         Page<Class> classPage;
 
+        Long companyId = usersRepository.findByEmail(userEmail).get().getCompanyId();
+
         if (filter == null || filter.isEmpty()) {
-            classPage = classRepository.findAll(pageable);
+            classPage = classRepository.findAllByCompanyId(pageable, companyId);
         } else {
-            classPage = classRepository.findByNameContainingIgnoreCaseOrLanguageContainingIgnoreCase(
-                    filter, filter, pageable);
+            classPage = classRepository.findByCompanyIdAndNameContainingIgnoreCaseOrCompanyIdAndLanguageContainingIgnoreCase(companyId,
+                    filter,companyId, filter, pageable);
         }
 
         // Map each Class entity to ClassDto and populate teacherDto

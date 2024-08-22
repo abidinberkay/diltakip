@@ -8,7 +8,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -54,14 +57,16 @@ public class ClassController {
     }
 
     @GetMapping("/page")
+//    @PreAuthorize("@authorization_util.authorizeForUser(#id, principal)")
     public ResponseEntity<Page<ClassDto>> findAllClassesByPage(
             @RequestParam int page,
             @RequestParam int size,
-            @RequestParam(required = false) String filter
+            @RequestParam(required = false) String filter,
+            Principal principal
     ) {
         try {
             Pageable pageable = PageRequest.of(page, size);
-            Page<ClassDto> classPage = classService.findAllAsPage(filter, pageable);
+            Page<ClassDto> classPage = classService.findAllAsPage(filter, pageable, principal.getName());
             return ResponseEntity.ok(classPage);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

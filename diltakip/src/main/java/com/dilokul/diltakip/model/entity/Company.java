@@ -5,13 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "class")
-public class Class {
+@Table(name = "company")
+public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,17 +19,4 @@ public class Class {
 
     private String name;
 
-    private String language;
-
-    @Column(name = "teacher_id")
-    private Long teacherId;
-
-    private Long capacity;
-
-    @Column(name = "number_of_students")
-    private Long numberOfStudent;
-
-    @Column(name = "company_id")
-    private Long companyId;
 }
-

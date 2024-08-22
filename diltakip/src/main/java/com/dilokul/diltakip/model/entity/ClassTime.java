@@ -28,4 +28,10 @@ public class ClassTime {
 
     @Column(name = "end_time")
     private LocalTime endTime;
+
+    @Column(name = "class_id")
+    private Long classId;
+
+    @Column(name = "company_id")
+    private Long companyId;
 }
