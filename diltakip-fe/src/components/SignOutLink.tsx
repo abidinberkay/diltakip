@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 function SignOutLink() {
-    const navigate = useNavigate();
+    const { logout } = useAuth();
 
     const handleSignOut = () => {
-        sessionStorage.clear(); // Clear session storage
-        navigate('/'); // Redirect to the login page
+        logout(); // Call the logout function from AuthContext
     };
 
     return (

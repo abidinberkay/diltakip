@@ -1,36 +1,33 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../components/AuthContext';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { login } = useAuth();
 
-    const
-        handleLogin = async (event: React.FormEvent) => {
-            event.preventDefault();
-            try {
-                const response = await axios.post('http://localhost:8080/auth/login',
-                    {
-                        email,
-                        password
-                    }, { withCredentials: true });
+    const handleLogin = async (event: React.FormEvent) => {
+        event.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:8080/auth/login', {
+                email,
+                password
+            }, { withCredentials: true });
 
-                if (response.status === 200) {
-                    const token = response.data.jwtToken; // Adjust based on your API response
-                    sessionStorage.setItem('cookietoken', token);
-
-                    if (token) {
-                        navigate('/anamenu'); // Navigate after successful login confirmation
-                    }
-                }
-            } catch (err) {
-                setError('Invalid credentials. Please try again.');
-                console.error("Login failed", err);
+            if (response.status === 200) {
+                const token = response.data.jwtToken; // Adjust based on your API response
+                login(token);
+                navigate('/anamenu'); // Navigate after successful login
             }
-        };
+        } catch (err) {
+            setError('Invalid credentials. Please try again.');
+            console.error("Login failed", err);
+        }
+    };
 
     return (
         <div className="container mt-4">
