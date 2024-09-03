@@ -34,8 +34,8 @@ public class ClassService {
         return modelMapper.map(savedClass, ClassDto.class);
     }
 
-    public Page<ClassDto> findAllAsPage(Pageable pageable) {
-        Page<Class> classPage = classRepository.findAll(pageable);
+    public Page<ClassDto> findAllAsPage(Pageable pageable, Long companyId) {
+        Page<Class> classPage = classRepository.findAllByCompanyId(pageable, companyId);
         return classPage.map(classEntity -> modelMapper.map(classEntity, ClassDto.class));
     }
 
@@ -56,12 +56,7 @@ public class ClassService {
             ClassDto classDto = modelMapper.map(classEntity, ClassDto.class);
 
             // Fetch the Teacher entity and map it to teacherDto
-            Teacher teacher = teacherRepository.findById(classEntity.getTeacherId())
-                    .orElse(null);
-
-            if (teacher != null) {
-                classDto.setTeacherDto(modelMapper.map(teacher, TeacherDto.class));
-            }
+            teacherRepository.findById(classEntity.getTeacherId()).ifPresent(teacher -> classDto.setTeacherDto(modelMapper.map(teacher, TeacherDto.class)));
 
             if(classEntity.getNumberOfStudent() >= classEntity.getCapacity()) {
                 classDto.setFull(true);
